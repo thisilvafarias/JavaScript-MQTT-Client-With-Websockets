@@ -6,7 +6,7 @@
 </p>
 
 **MQTT Broker**
-Raspberry Pi 
+- Raspberry Pi 
 ```
 $ sudo nano /etc/mosquitto/mosquitto.conf   
 ```
@@ -16,11 +16,11 @@ $ sudo nano /etc/mosquitto/mosquitto.conf
 
 
 **MQTT Client**
-ESP8266 NodeMCU LUA 
+- ESP8266 NodeMCU LUA  <br>
 MQTT protocol (with Mosquitto - message broker that Implements MQTT). 
 
 **MQTT Client**
-JavaScript MQTT over websockets 
+- JavaScript MQTT over websockets  <br>
 (Paho website - <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 )
 
