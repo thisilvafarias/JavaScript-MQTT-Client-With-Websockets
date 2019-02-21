@@ -8,6 +8,14 @@
 **MQTT Broker**
 - Raspberry Pi 
 ```
+ $ mosquitto -v
+ ```
+ | **** |
+| --- |
+|<br>1550747724: mosquitto version 1.4.10 (build date Wed, 13 Feb 2019 00:45:38 +0000) starting <br> 1550747724: Using default config.<br>1550747724: Opening ipv4 listen socket on port 1883.<br>1550747724: Error: Address already in use|
+ 
+ 
+```
 $ sudo nano /etc/mosquitto/mosquitto.conf   
 ```
 | **File: /etc/mosquitto/mosquitto.conf** |
