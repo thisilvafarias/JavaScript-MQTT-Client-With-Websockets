@@ -9,7 +9,7 @@ $ sudo nano /etc/mosquitto/mosquitto.conf
 ```
 | **File: /etc/mosquitto/mosquitto.conf** |
 | --- |
-|     |
+|   testiing  |
                  
 **MQTT Client**
 ESP8266 NodeMCU LUA using MQTT protocol (with Mosquitto - message broker that Implements MQTT). 
