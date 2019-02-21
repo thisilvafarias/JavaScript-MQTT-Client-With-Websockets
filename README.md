@@ -2,9 +2,12 @@
 
 ## Iot Project
 
-*MQTT Broker*
+**MQTT Broker**
 Raspberry PI 
-sudo nano /etc/mosquitto/mosquitto.conf
+```
+$ sudo nano /etc/mosquitto/mosquitto.conf   
+```
+
 | --- |
 Place your local configuration in /etc/mosquitto/conf.d/
 
