@@ -5,7 +5,7 @@ Iot Project
 **MQTT Broker**
 Raspberry PI 
 sudo nano /etc/mosquitto/mosquitto.conf
-***************************************************************************
+| --- |
 # Place your local configuration in /etc/mosquitto/conf.d/
 #
 # A full description of the configuration file is at
@@ -24,7 +24,7 @@ include_dir /etc/mosquitto/conf.d
 listener 1883
 listener 1884
 protocol websockets
-***************************************************************************
+| --- |
 
 **MQTT Client**
 ESP8266 NodeMCU LUA using MQTT protocol (with Mosquitto - message broker that Implements MQTT). 
