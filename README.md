@@ -9,7 +9,7 @@ $ sudo nano /etc/mosquitto/mosquitto.conf
 ```
 | **Language** |
 | --- |
-|  |
+| test |
 
 
 **MQTT Client**
