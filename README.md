@@ -9,10 +9,10 @@ $ sudo nano /etc/mosquitto/mosquitto.conf
 ```
 
 | --- |
-| Place your local configuration in /etc/mosquitto/conf.d/
+| Place your local configuration in /etc/mosquitto/conf.d/ |
 
- A full description of the configuration file is at
- /usr/share/doc/mosquitto/examples/mosquitto.conf.example
+ | A full description of the configuration file is at |
+ | /usr/share/doc/mosquitto/examples/mosquitto.conf.example|
 
 pid_file /var/run/mosquitto.pid
 
