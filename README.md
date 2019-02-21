@@ -9,7 +9,7 @@ $ sudo nano /etc/mosquitto/mosquitto.conf
 ```
 | **File: /etc/mosquitto/mosquitto.conf** |
 | --- |
-|   testiing  |
+|   testiing  <br/>|
 |   testiing  |
                  
 **MQTT Client**
