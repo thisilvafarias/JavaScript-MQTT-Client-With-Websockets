@@ -9,8 +9,7 @@ $ sudo nano /etc/mosquitto/mosquitto.conf
 ```
 | **File: /etc/mosquitto/mosquitto.conf** |
 | --- |
-| # Place your local configuration in /etc/mosquitto/conf.d/ <br># <br># A full description of the configuration file is at <br># /usr/share/doc/mosquitto/examples/mosquitto.conf.example<br><br>pid_file /var/run/mosquitto.pid<br><br>persistence true
-persistence_location /var/lib/mosquitto/<br><br>log_dest file /var/log/mosquitto/mosquitto.log<br><br>include_dir /etc/mosquitto/conf.d<br><br><br>listener 1883<br>listener 1884<br>protocol websockets |
+| # Place your local configuration in /etc/mosquitto/conf.d/ <br># <br># A full description of the configuration file is at <br># /usr/share/doc/mosquitto/examples/mosquitto.conf.example<br><br>pid_file /var/run/mosquitto.pid<br><br>persistence true persistence_location /var/lib/mosquitto/<br><br>log_dest file /var/log/mosquitto/mosquitto.log<br><br>include_dir /etc/mosquitto/conf.d<br><br><br>listener 1883<br>listener 1884<br>protocol websockets |
 
 
 **MQTT Client**
