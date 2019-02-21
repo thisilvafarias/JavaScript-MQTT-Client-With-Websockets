@@ -7,6 +7,9 @@ Raspberry PI
 ```
 $ sudo nano /etc/mosquitto/mosquitto.conf   
 ```
+| **Language** | **IDE** | **Server environment (runtime system)** | **Package manager** | **Modules(JavaScript libraries)**  | **Framework** | **RESTful API** | **Template System** |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| JavaScript | Webstorm | Node.js | npm | Socket.IO(realtime, bi-directional communication) | - Express - Bootstrap | PiNeapple | Handlebars.js(extension to the Mustache) |
 
 
 **MQTT Client**
