@@ -7,27 +7,10 @@ Raspberry PI
 ```
 $ sudo nano /etc/mosquitto/mosquitto.conf   
 ```
-| **File: /etc/mosquitto/mosquitto.conf** `<br>` 
-# Place your local configuration in /etc/mosquitto/conf.d/ `<br>`
-# `<br>`
-# A full description of the configuration file is at `<br>`
-# /usr/share/doc/mosquitto/examples/mosquitto.conf.example `<br>`
-`<br>`
-pid_file /var/run/mosquitto.pid`<br>`
-
-persistence true`<br>`
-persistence_location /var/lib/mosquitto/`<br>`
-
-log_dest file /var/log/mosquitto/mosquitto.log`<br>`
-`<br>`
-include_dir /etc/mosquitto/conf.d`<br>`
-`<br>`
-`<br>`
-listener 1883`<br>`
-listener 1884`<br>`
-protocol websockets`<br>`
-                   |
-
+| **File: /etc/mosquitto/mosquitto.conf** |
+| --- |
+|     |
+                 
 **MQTT Client**
 ESP8266 NodeMCU LUA using MQTT protocol (with Mosquitto - message broker that Implements MQTT). 
 
