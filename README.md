@@ -2,7 +2,7 @@
 
 ## Iot Project
  <p align="center">
- <img src="https://user-images.githubusercontent.com/38040414/53164297-c9af8c80-35c7-11e9-8edf-6985c6831971.png" width="50"> by Thiago Farias
+ <img src="https://user-images.githubusercontent.com/38040414/53164297-c9af8c80-35c7-11e9-8edf-6985c6831971.png" width="500"> by Thiago Farias
 </p>
 
 **MQTT Broker**
