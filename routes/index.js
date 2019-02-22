@@ -4,7 +4,7 @@ var mqtt = require('mqtt');
 var clientId = "iot_web_" + Math.floor((1 + Math.random()) * 0x10000000000).toString(16);
 var topicLed = "WebToEsp/led";
 var topicMessage = "Message";
-var client = mqtt.connect("192.168.0.200:1884/ws", {
+var client = mqtt.connect("mqtt://192.168.0.200:1884/ws", {
   clientId: clientId
 });
 client.on('connect', function () {
