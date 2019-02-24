@@ -19,18 +19,37 @@
     <button id="btn_led_on" type="button">Turn LED on</button>
     <button id="btn_led_off" type="button">Turn LED off</button>
 
-    <!-- this is where new text will appear -->
-    <div id="updateMe">
-    </div>
- 
-
-        <!-- this is where the  sensor  will appear -->
-    <div id="lightSensorValue">
+    <div class="slidecontainer">
+      <p>LIGHT <span id="led_state">OFF</span></p> <!-- state initial -->
+      <label class="switch">
+      <input type="checkbox" onchange="state_change(this)">
+      <span class="slider1 round"></span>
+      </label>
     </div>
 
     <div class="container">
     </body>
     <script>
+    var state_change = (element) => {
+      if(element.checked) {
+        $.ajax({
+						url: '/turnOn',
+            method: 'post',
+            success: function(data){
+							$("#led_state").html("ON");
+						}
+					});
+      } else {
+        $.ajax({
+						url: '/turnOff',
+            method: 'post',
+            success: function(data){
+              $("#led_state").html("OFF");
+						}
+					});
+      }
+    } 
+
     $("#btn_n1").click(() => {
       alert("n1 click");
       $.ajax({
