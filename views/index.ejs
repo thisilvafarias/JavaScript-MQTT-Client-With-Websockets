@@ -1,20 +1,12 @@
 <html>
-
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <title>IoT Web Client</title>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-
 </head>
-
-  <!-- this is an HTML comment -->
   <body>
     <div class="container">
     <h1>Hello World Webpage</h1>
-        <!-- this is the secton wrapping our new button -->
-    <div>
-      <button id="btn_n1" type="button">Press me!</button>
-    </div>
 
     <button id="btn_led_on" type="button">Turn LED on</button>
     <button id="btn_led_off" type="button">Turn LED off</button>
@@ -50,17 +42,6 @@
       }
     } 
 
-    $("#btn_n1").click(() => {
-      alert("n1 click");
-      $.ajax({
-						url: '/message',
-            method: 'post',
-            success: function(data){
-							alert("n1 success");
-						}
-					});
-    });
-    
     $("#btn_led_on").click(() => {
       alert("led on click");
       $.ajax({
