@@ -1,67 +1,86 @@
 <html>
+
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<title>IoT Web Client</title>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  <title>IoT Web Client</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 </head>
-  <body>
-    <div class="container">
-    <h1>Hello World Webpage</h1>
 
-    <button id="btn_led_on" type="button">Turn LED on</button>
-    <button id="btn_led_off" type="button">Turn LED off</button>
+<!-- this is an HTML comment -->
+<body>
+<div class="container">
+  <h1> Smart Home  </h1>
 
-    <div class="slidecontainer">
-      <p>LIGHT <span id="led_state">OFF</span></p> <!-- state initial -->
-      <label class="switch">
-      <input type="checkbox" onchange="state_change(this)">
+  <!-- Slider button  for light-->
+  <div class="slidecontainer">
+
+    <p>LIGHT <span id="led_state">OFF</span></p>
+    <label class="switch">
+      <input type="checkbox" onchange="led_state_change(this)">
       <span class="slider1 round"></span>
-      </label>
-    </div>
+    </label>
+  </div>
 
-    <div class="container">
-    </body>
-    <script>
-    var state_change = (element) => {
-      if(element.checked) {
-        $.ajax({
-						url: '/turnOn',
-            method: 'post',
-            success: function(data){
-							$("#led_state").html("ON");
-						}
-					});
-      } else {
-        $.ajax({
-						url: '/turnOff',
-            method: 'post',
-            success: function(data){
-              $("#led_state").html("OFF");
-						}
-					});
-      }
-    } 
+  <!-- Slider button  for heater-->
+  <div class="slidecontainer">
 
-    $("#btn_led_on").click(() => {
-      alert("led on click");
-      $.ajax({
-						url: '/turnOn',
-            method: 'post',
-            success: function(data){
-							alert("turned on");
-						}
-					});
-    });
-    
-    $("#btn_led_off").click(() => {
-      alert("led off click");
-      $.ajax({
-						url: '/turnOff',
-            method: 'post',
-            success: function(data){
-							alert("turned off");
-						}
-					});
-    });
-  </script>
+    <p>HEATER <span id="heater_state">OFF</span></p>
+    <label class="switch">
+      <input type="checkbox" onchange="heater_state_change(this)">
+      <span class="slider1 round"></span>
+    </label>
+  </div>
+
+
+  <!-- this is where the  sensor  will appear -->
+  <div id="lightSensorValue"></div>
+
+  <div class="container">
+</body>
+
+
+<script>
+    // Functions (jquery) to check switch **Light**
+    var led_state_change = (element) => {
+        if(element.checked) {
+            $.ajax({
+                url: '/turnOnLed',
+                method: 'post',
+                success: function(data){
+                    $("#led_state").html("LED_ON");
+                }
+            });
+        } else {
+            $.ajax({
+                url: '/turnOffLed',
+                method: 'post',
+                success: function(data){
+                    $("#led_state").html("LED_OFF");
+                }
+            });
+        }
+    }
+
+// Functions (jquery) to check switch **Heater**
+    var heater_state_change = (element) => {
+        if(element.checked) {
+            $.ajax({
+                url: '/turnOnHeater',
+                method: 'post',
+                success: function(data){
+                    $("#heater_state").html("HEATER_ON");
+                }
+            });
+        } else {
+            $.ajax({
+                url: '/turnOffHeater',
+                method: 'post',
+                success: function(data){
+                    $("#heater_state").html("HEATER_OFF");
+                }
+            });
+        }
+    }
+</script>
 </html>
