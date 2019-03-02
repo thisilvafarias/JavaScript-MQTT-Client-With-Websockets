@@ -2,12 +2,13 @@ var express = require('express');
 var router = express.Router();
 var mqtt = require('mqtt');
 var clientId = "iot_web_" + Math.floor((1 + Math.random()) * 0x10000000000).toString(16);
-var topicLed = "WebToEsp/led";
-var topicHeater = "WebToEsp/heater";
-var topicMessage = "Message";
+//var topicLed = "WebToEsp/led";
+//var topicHeater = "WebToEsp/heater";
+var topicMessage = "FromESPtoWeb/door";
 var client = mqtt.connect("ws://192.168.0.200:1884/ws", {
     clientId: clientId
 });
+
 
 //Connection and subscribe to topics
 client.on('connect', function () {
@@ -18,32 +19,31 @@ client.on('connect', function () {
             alert("something went wrong on subscribe to message");
         }
     })
-    //Subscribe to topic led
-    client.subscribe(topicLed, function (err) {
-        if (err) {
-            alert("something went wrong on subscribe to led");
-        }
-    })
-    //Subscribe to topic heater
-    client.subscribe(topicHeater, function (err) {
-        if (err) {
-            alert("something went wrong on subscribe to heater");
-        }
-    })
 
 })
-
+var content = "door open";
 client.on('message', function (topic, message) {
     if (message == "button pushed") {
-        alert("The pushbutton was pushed!");
+     //   console.log("The pushbutton was pushed!");
+     //   content = message;
+        doorClosed(message);
+        client.emit("updated messages", content);
     }
-})
-
-/* GET home page. */
-router.get('/', function (req, res) {
-    res.render('index');
 });
 
+/* GET home page. */
+router.get('/', function(req, res) {
+    res.render('index', { title: content });
+});
+
+var doorOpen = () => {
+    console.log("door open");
+}
+
+var doorClosed = (message) => {
+    console.log("door closed");
+    content = message;
+}
 // turn led on
 router.post('/turnOnLed', function (req, res) {
     turnOnLED();
@@ -68,14 +68,14 @@ router.post('/turnOffHeater', function (req, res) {
     res.render('index');
 });
 
-//Method with how to publish
+/*Method with how to publish
 var howToPublish = () => {
     console.log("Publishing");
     if (client.connected) {
         client.publish(topicMessage, 'Hello from website');
     }
 }
-
+*/
 //******      LED      *****//*
 var turnOnLED = () => {
     console.log("turnOnLED");
@@ -99,13 +99,14 @@ var turnOnHeater = () => {
     }
 }
 
-//Led was switched Off in the webpage (from Post)
+//Heater was switched Off in the webpage
 var turnOffHeater = () => {
     console.log("turnOffHeater");
     if (client.connected) {
         client.publish('heater', 'turn heater off');
     }
 }
+
 
 module.exports = router;
 
