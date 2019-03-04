@@ -9,6 +9,7 @@ var client = mqtt.connect("ws://192.168.0.200:1884/ws", {
     clientId: clientId
 });
 
+var content = { msg: "Closed" };
 
 //Connection and subscribe to topics
 client.on('connect', function () {
@@ -21,29 +22,35 @@ client.on('connect', function () {
     })
 
 })
-var content = "door open";
+
 client.on('message', function (topic, message) {
-    if (message == "button pushed") {
-     //   console.log("The pushbutton was pushed!");
-     //   content = message;
-        doorClosed(message);
-        client.emit("updated messages", content);
+    if (message == "Door Open") {
+        doorOpen(message);
     }
 });
 
-/* GET home page. */
-router.get('/', function(req, res) {
-    res.render('index', { title: content });
+client.on('message', function (topic, message) {
+    if (message == "Door Closed") {
+        doorClosed(message);
+    }
 });
 
-var doorOpen = () => {
+var doorOpen = (message) => {
     console.log("door open");
-}
+    content.msg = message;
+};
+
 
 var doorClosed = (message) => {
     console.log("door closed");
-    content = message;
+    content.msg = message;
 }
+
+/* GET home page. */
+router.get('/', function(req, res) {
+    res.render('index', content );
+});
+
 // turn led on
 router.post('/turnOnLed', function (req, res) {
     turnOnLED();

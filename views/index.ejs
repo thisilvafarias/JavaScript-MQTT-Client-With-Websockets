@@ -1,14 +1,23 @@
 <html>
 
 <head>
-  <title>Smart Home</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-  <title>IoT Web Client</title>
+    <title>Smart Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <title>IoT Web Client</title>
+
+    <script>
+        window.setInterval(() => {
+            console.log("TIMEOUT");
+        $( "#p_id" ).load(window.location.href + " #p_id" );
+        }, 100);
+    </script>
+
+
 </head>
 
 <!-- this is an HTML comment -->
@@ -25,11 +34,11 @@
 <div class="container-fluid bg-3 text-center" style="background-color:lightgray;">
     <br>
 
-    <div class="row"">  <!-- row one-->
-    <div class="col-sm-6"">
+    <div class="row" style="background-color:#dcdcdc;">  <!-- row one-->
+    <div class="col-sm-6">
     <!-- Slider button  for heater-->
     <div class="slidecontainer">
-        <p>LIGHT <span id="led_state">OFF</span></p>
+        <h4>LIGHT <span id="led_state">OFF</span></h4>
         <label class="switch">
             <input type="checkbox" onchange="led_state_change(this)">
             <span class="slider1 round"></span>
@@ -37,10 +46,9 @@
     </div>
 </div>
 <div class="col-sm-6">
-    <!-- Slider button  for heater-->
+     <!-- Slider button  for heater-->
     <div class="slidecontainer">
-
-        <p>HEATER <span id="heater_state">OFF</span></p>
+        <h4>HEATER <span id="heater_state">OFF</span></h4>
         <label class="switch">
             <input type="checkbox" onchange="heater_state_change(this)">
             <span class="slider1 round"></span>
@@ -48,59 +56,53 @@
     </div>
 </div>
 </div>
-<div class="row"  style="background-color:gray;">  <!-- row two-->
+    <br>
+<div class="row">  <!-- row two-->
+    <div class="col-sm-4">
+        <img class="logo" src="images/light.png" alt="attention" width="25%"> <br>
+        <h4>Light is ON/OFF</h4>
+    </div>
+    <div class="col-sm-4">
+        <img class="logo" src="images/temperature.png" alt="attention" width="30%"> <br>
+        <h4>Temperature</h4>
+    </div>
+    <div class="col-sm-4">
+        <img class="logo" src="images/soil.png" alt="attention" width="45%"> <br>
+        <h4>Soil Moisture</h4>
+    </div>
+</div>
+<div class="row" style="background-color:gray;" >  <!-- row four-->
     <div class="container text-center">
         <h2>Alarms <img class="logo" src="images/attention.png" alt="attention" width="3%"> </h2>
     </div>
     <div class="col-sm-4">
-        Light
-        <div>
-            <p> DOOR <span id="story">OPEN </span></p>
-        </div>
-        <div>
-            <p>Show here ==> <span id="story"> Door Open </span></p>
-
-            <script>
-                client.on("updated messages", text => {
-                    $("#story").html(text);
-                });
-            </script>
-
-
-        </div>
-
+        <img class="logo" src="images/plant.png" alt="attention" width="25%"> <br>
+        <h4>Water Plant</h4>
     </div>
     <div class="col-sm-4">
-        Temperature
+        <img class="logo" src="images/moveSensor.png" alt="attention" width="25%"> <br>
+        <h4>Move Sensor</h4>
     </div>
     <div class="col-sm-4">
-        Soil Moisture
-    </div>
-</div>
-<div class="row" style="background-color:gray;" >  <!-- row four-->
-    <div class="col-sm-4">
-        Water Plant
-    </div>
-    <div class="col-sm-4">
-        Soil Moisture
-    </div>
-    <div class="col-sm-4">
-        Door
+        <img class="logo" src="images/door.png" alt="attention" width="25%"> <br>
+        <h4 id="p_id"> <%= msg %> </p>
     </div>
 </div>
 <div class="row" style="background-color:gray;" >  <!-- row five-->
     <div class="col-sm-6">
-        Window
+        <img class="logo" src="images/window.png" alt="attention" width="18%"> <br>
+        <h4>Window</h4>
     </div>
     <div class="col-sm-6"">
-    Heater
+    <img class="logo" src="images/heater.png" alt="attention" width="15%"><br>
+    <h4>Heater on/off</h4>
 </div>
 </div>
 </div><br>
 
 
 <footer class="container-fluid text-center">
-        <img class="logo" src="images/rpi.png" alt="attention" width="20%">
+    <img class="logo" src="images/rpi.png" alt="attention" width="20%">
 </footer>
 
 </body>
@@ -108,7 +110,7 @@
 
 <script>
 
-  // Functions (jquery) to check switch **Light**
+    // Functions (jquery) to check switch **Light**
     var led_state_change = (element) => {
         if(element.checked) {
             $.ajax({
@@ -129,7 +131,7 @@
         }
     }
 
-// Functions (jquery) to check switch **Heater**
+    // Functions (jquery) to check switch **Heater**
     var heater_state_change = (element) => {
         if(element.checked) {
             $.ajax({
