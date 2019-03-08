@@ -8,6 +8,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <script src="javascript/raphael.2.1.0.min.js"></script>
+    <script src="javascript/justgage.1.0.1.min.js"></script>
+
+
     <title>IoT Web Client</title>
 
     <script>
@@ -16,7 +20,73 @@
         $( "#d_id" ).load(window.location.href + " #d_id" );
         $( "#w_id" ).load(window.location.href + " #w_id" );
         }, 100);
+
+    var g1;
+    var min = 0;
+    var max = 50;
+    var temp = "<%= content.tempMsg %>";
+
+    var g2;
+    var minG2 = 0;
+    var maxG2 = 100;
+
+
+    $(function(){
+
+    var g1 = new JustGage({
+    id: "g1",
+    value: temp,
+    min: min,
+    max: max,
+    title: "Temperature",
+    label: "Celsius",
+    levelColorsGradient: true,
+    levelColors: ["FF0000","FF6103","FFFF00","00FF00","FFFF00","FF0000"],
+    shadowSize: 2,
+    shadowVerticalOffset: 12
+    });
+
+    var g2 = new JustGage({
+        id: "g2",
+        value: temp,
+        min: minG2,
+        max: maxG2,
+        title: "Soil Moisture",
+        label: "%",
+        levelColorsGradient: true,
+        levelColors: ["FF0000","FF6103","FFFF00","00FF00","FFFF00","FF0000"],
+        shadowSize: 2,
+        shadowVerticalOffset: 12
+    });
+
+    setInterval(function() {
+    if(!$('#on_check').attr('checked'))return;
+    $.get('http://'+window.location.host+'/?getData',function(data){
+    data = data/1000;
+    data = parseFloat(data.toFixed(3));
+
+    g1.refresh(data);//GAGE1
+    g2.refresh(data);//GAGE2
+
+    });
+    }, 500);
+    });
+
     </script>
+    <style>
+
+        #g1 {
+        width:400px; height:320px;
+        display: inline-block;
+        margin: 1em;
+    }
+        #g2 {
+            width:400px; height:320px;
+            display: inline-block;
+            margin: 1em;
+        }
+
+    </style>
 
 
 </head>
@@ -64,12 +134,10 @@
             <h4>Light is ON/OFF</h4>
         </div>
         <div class="col-sm-4">
-            <img class="logo" src="images/temperature.png" alt="attention" width="30%"> <br>
-            <h4>Temperature</h4>
+            <div id="g1"></div>
         </div>
         <div class="col-sm-4">
-            <img class="logo" src="images/soil.png" alt="attention" width="45%"> <br>
-            <h4>Soil Moisture</h4>
+            <div id="g2"></div>
         </div>
     </div>
     <div class="row" style="background-color:gray;" >  <!-- row four-->

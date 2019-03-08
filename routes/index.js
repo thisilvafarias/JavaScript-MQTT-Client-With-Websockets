@@ -2,15 +2,14 @@ var express = require('express');
 var router = express.Router();
 var mqtt = require('mqtt');
 var clientId = "iot_web_" + Math.floor((1 + Math.random()) * 0x10000000000).toString(16);
-//var topicLed = "WebToEsp/led";
-//var topicHeater = "WebToEsp/heater";
+var topicTemp = "FromESPtoWeb/temp";
 var topicMessagedoor = "FromESPtoWeb/door";
 var topicMessagewindow = "FromESPtoWeb/window";
 var client = mqtt.connect("ws://192.168.0.200:1884/ws", {
     clientId: clientId
 });
 
-var content = { doorMsg: "Door Closed" , windowMsg: "Window Closed" };
+var content = { doorMsg: "Door Closed" , windowMsg: "Window Closed", tempMsg : ""  };
 
 //Connection and subscribe to topics
 client.on('connect', function () {
@@ -21,35 +20,48 @@ client.on('connect', function () {
             alert("something went wrong on subscribe to message");
         }
 
-    client.on('message', function (topic, doorMessage) {
-        if (doorMessage == "Door Open") {
-            doorOpen(doorMessage);
-        }
-    });
+        client.on('message', function (topic, doorMessage) {
+            if (doorMessage == "Door Open") {
+                doorOpen(doorMessage);
+            }
+        });
 
-    client.on('message', function (topic, doorMessage) {
-        if (doorMessage == "Door Closed") {
-            doorClosed(doorMessage);
-        }
-    });
-}) //subscribe door
+        client.on('message', function (topic, doorMessage) {
+            if (doorMessage == "Door Closed") {
+                doorClosed(doorMessage);
+            }
+        });
+    }) //subscribe door
 // Subscribe to topic "FromESPtoWeb/window"
-client.subscribe(topicMessagewindow, function (err) {
-    if (err) {
-        alert("something went wrong on subscribe to message");
-    }
-    client.on('message', function (topic, windowMessage) {
-        if (windowMessage == "Window Open") {
-            windowOpen(windowMessage);
+    client.subscribe(topicMessagewindow, function (err) {
+        if (err) {
+            alert("something went wrong on subscribe to message");
         }
-    });
+        client.on('message', function (topic, windowMessage) {
+            if (windowMessage == "Window Open") {
+                windowOpen(windowMessage);
+            }
+        });
 
-    client.on('message', function (topic, windowMessage) {
-        if (windowMessage == "Window Closed") {
-            windowClosed(windowMessage);
-        }
+        client.on('message', function (topic, windowMessage) {
+            if (windowMessage == "Window Closed") {
+                windowClosed(windowMessage);
+            }
         });
     }) //subscribe window
+
+    //Subscribe to topic "FromESPtoWeb/temp"
+    client.subscribe(topicTemp, function (err) {
+        if (err) {
+            alert("something went wrong on subscribe to message");
+        }
+
+        client.on('message', function (topic, temp) {
+            console.log(temp.toString());
+            content.tempMsg = temp.toString();
+        });
+
+    }) //subscribe temp
 })// connection
 
 var doorOpen = (doorMessage) => {
@@ -145,4 +157,3 @@ var turnOffHeater = () => {
 
 
 module.exports = router;
-
