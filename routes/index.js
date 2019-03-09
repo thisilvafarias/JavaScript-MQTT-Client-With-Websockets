@@ -4,12 +4,14 @@ var mqtt = require('mqtt');
 var clientId = "iot_web_" + Math.floor((1 + Math.random()) * 0x10000000000).toString(16);
 var topicTemp = "FromESPtoWeb/temp";
 var topicMessagedoor = "FromESPtoWeb/door";
+var topicMessagemoisture = "FromESPtoWeb/moisture";
 var topicMessagewindow = "FromESPtoWeb/window";
 var client = mqtt.connect("ws://192.168.0.200:1884/ws", {
     clientId: clientId
 });
 
-var content = { doorMsg: "Door Closed" , windowMsg: "Window Closed", tempMsg : ""  };
+var content = { doorMsg: "Door Closed" , windowMsg: "Window Closed", tempMsg : "", moistureMsg : ""  };
+
 
 //Connection and subscribe to topics
 client.on('connect', function () {
@@ -22,13 +24,15 @@ client.on('connect', function () {
 
         client.on('message', function (topic, doorMessage) {
             if (doorMessage == "Door Open") {
-                doorOpen(doorMessage);
+                console.log("door open");
+                content.doorMsg = doorMessage;
             }
         });
 
         client.on('message', function (topic, doorMessage) {
             if (doorMessage == "Door Closed") {
-                doorClosed(doorMessage);
+                console.log("door closed");
+                content.doorMsg = doorMessage;
             }
         });
     }) //subscribe door
@@ -39,13 +43,15 @@ client.on('connect', function () {
         }
         client.on('message', function (topic, windowMessage) {
             if (windowMessage == "Window Open") {
-                windowOpen(windowMessage);
+                console.log("window open");
+                content.windowMsg = windowMessage;
             }
         });
 
         client.on('message', function (topic, windowMessage) {
             if (windowMessage == "Window Closed") {
-                windowClosed(windowMessage);
+                console.log("window closed");
+                content.windowMsg = windowMessage;
             }
         });
     }) //subscribe window
@@ -62,28 +68,21 @@ client.on('connect', function () {
         });
 
     }) //subscribe temp
+    //Subscribe to topic "FromESPtoWeb/moisture"
+    client.subscribe(topicMessagemoisture, function (err) {
+        if (err) {
+            alert("something went wrong on subscribe to message");
+        }
+
+        client.on('message', function (topic, moisture) {
+            console.log(moisture.toString());
+            content.moistureMsg = moisture.toString();
+        });
+
+    })//moisture
 })// connection
 
-var doorOpen = (doorMessage) => {
-    console.log("door open");
-    content.doorMsg = doorMessage;
-};
 
-
-var doorClosed = (doorMessage) => {
-    console.log("door closed");
-    content.doorMsg = doorMessage;
-}
-
-var windowOpen = (windowMessage) => {
-    console.log("window open");
-    content.windowMsg = windowMessage;
-};
-
-var windowClosed = (windowMessage) => {
-    console.log("window closed");
-    content.windowMsg = windowMessage;
-}
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -95,7 +94,6 @@ router.post('/turnOnLed', function (req, res) {
     turnOnLED();
     res.render('index');
 });
-
 
 
 // turn led off
@@ -116,14 +114,7 @@ router.post('/turnOffHeater', function (req, res) {
     res.render('index');
 });
 
-/*Method with how to publish
-var howToPublish = () => {
-    console.log("Publishing");
-    if (client.connected) {
-        client.publish(topicMessage, 'Hello from website');
-    }
-}
-*/
+
 //******      LED      *****//*
 var turnOnLED = () => {
     console.log("turnOnLED");
@@ -154,6 +145,5 @@ var turnOffHeater = () => {
         client.publish('heater', 'turn heater off');
     }
 }
-
 
 module.exports = router;
