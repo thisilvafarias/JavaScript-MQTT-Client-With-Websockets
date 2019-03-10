@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="javascript/raphael.2.1.0.min.js"></script>
+    <script src="javascript/justgage.1.0.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 
 
@@ -20,21 +22,22 @@
         $( "#w_id" ).load(window.location.href + " #w_id" );
         $( "#sm_id" ).load(window.location.href + " #sm_id" );
         $( "#m_id" ).load(window.location.href + " #m_id" );
-        }, 1000);
+        }, 10000);
 
 
             setInterval(function() {
-                if(!$('#on_check').attr('checked'))return;
-                $.get('http://'+window.location.host+'/?getData',function(data){
-                    data = data/1000;
-                    data = parseFloat(data.toFixed(3));
+                $.get('http://'+window.location.host+'/?chart',function(data){
+                    data.temperature = data.temperature/1000;
+                    data.temperature = parseFloat(data.toFixed(3));
 
+                    data.moisture = data.temperature/1000;
+                    data.moisture = parseFloat(data.toFixed(3));
 
-                    g1.refresh(data);//GAGE1
-                    g2.refresh(data);//GAGE2
+                    g1.refresh(data.temperature);//GAGE1
+                    g2.refresh(data.moisture);//GAGE2
 
                 });
-            }, 500);
+            }, 5000);
         });
 
     </script>
@@ -198,6 +201,36 @@
             });
         }
     }
+
+    var chart1 = (temperature) => {
+        return new JustGage({
+            id: "g1",
+            value: temperature,
+            min: 0,
+            max: 50 ,
+            title: "Temperature",
+            label: "Celsius",
+            levelColorsGradient: true,
+            levelColors: ["FF0000", "FF6103", "FFFF00", "00FF00", "FFFF00", "FF0000"],
+            shadowSize: 2,
+            shadowVerticalOffset: 12
+        });
+    }
+    var chart2 = (moisture) => {
+        return new JustGage({
+            id: "g2",
+            value: moisture,
+            min: 0,
+            max: 100,
+            title: "Soil Moisture",
+            label: "%",
+            levelColorsGradient: true,
+            levelColors: ["FF0000", "FF6103", "FFFF00", "00FF00", "FFFF00", "FF0000"],
+            shadowSize: 2,
+            shadowVerticalOffset: 12
+        });
+    }
+}
 
 </script>
 </html>

@@ -1,5 +1,4 @@
 var express = require('express');
-var JustGage = require('justgage');
 var router = express.Router();
 var mqtt = require('mqtt');
 var clientId = "iot_web_" + Math.floor((1 + Math.random()) * 0x10000000000).toString(16);
@@ -12,7 +11,12 @@ var client = mqtt.connect("ws://192.168.0.200:1884/ws", {
     clientId: clientId
 })
 
-var content = { doorMsg: "Door Closed" , windowMsg: "Window Closed", tempMsg:"", moistureMsg:"", motionMsg: "", chart1 : chart1, chart2: chart2};
+var content = { 
+    doorMsg: "Door Closed" ,
+    windowMsg: "Window Closed",
+    tempMsg: 0,
+    moistureMsg: 0,
+    motionMsg: "Nothing"};
 
 
 //Connection and subscribe to topics
@@ -62,8 +66,6 @@ client.on('connect', function () {
             alert("something went wrong on subscribe to message");
         }
     });
-
-
 });
 
 var temp = (message) => {
@@ -100,6 +102,14 @@ var motion = (message) => {
 }
 /* GET home page. */
 router.get('/', function(req, res) {
+    console.log(req.query);
+    if(req.query("chart")) {
+        console.log("called chart");
+        res.send({
+            temperature: content.tempMsg,
+            moisture: content.moistureMsg
+        });
+    }
     res.render('index', {  content : content } );
 });
 
@@ -108,7 +118,6 @@ router.post('/turnOnLed', function (req, res) {
     turnOnLED();
     res.render('index', {  content : content } );
 });
-
 
 // turn led off
 router.post('/turnOffLed', function (req, res) {
@@ -159,44 +168,4 @@ var turnOffHeater = () => {
     }
 }
 
-
-var g1;
-var min = 0;
-var max = 50;
-
-var g2;
-var minG2 = 0;
-var maxG2 = 100;
-var moisture = 50;
-
-
-var chart1 = (temperature)=>{
-
-    return new JustGage({
-        id: "g1",
-        value: temperature,
-        min: min,
-        max: max,
-        title: "Temperature",
-        label: "Celsius",
-        levelColorsGradient: true,
-        levelColors: ["FF0000", "FF6103", "FFFF00", "00FF00", "FFFF00", "FF0000"],
-        shadowSize: 2,
-        shadowVerticalOffset: 12
-    });
-}
-var chart2 = (moisture) =>{
-        return new JustGage({
-            id: "g2",
-            value: moisture,
-            min: minG2,
-            max: maxG2,
-            title: "Soil Moisture",
-            label: "%",
-            levelColorsGradient: true,
-            levelColors: ["FF0000", "FF6103", "FFFF00", "00FF00", "FFFF00", "FF0000"],
-            shadowSize: 2,
-            shadowVerticalOffset: 12
-        });
-}
 module.exports = router;
