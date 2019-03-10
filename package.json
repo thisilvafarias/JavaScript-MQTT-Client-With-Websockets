@@ -11,8 +11,10 @@
     "ejs": "^2.6.1",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
+    "justgage": "^1.2.2",
     "morgan": "~1.9.0",
-    "mqtt": "^2.18.8"
+    "mqtt": "^2.18.8",
+    "raphael": "^2.2.7"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"

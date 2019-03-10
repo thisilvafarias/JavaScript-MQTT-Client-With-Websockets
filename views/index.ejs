@@ -8,8 +8,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-    <script src="javascript/raphael.2.1.0.min.js"></script>
-    <script src="javascript/justgage.1.0.1.min.js"></script>
 
 
     <title>IoT Web Client</title>
@@ -24,46 +22,6 @@
         $( "#m_id" ).load(window.location.href + " #m_id" );
         }, 1000);
 
-        var g1;
-        var min = 0;
-        var max = 50;
-        var temp = 5;
-
-        var g2;
-        var minG2 = 0;
-        var maxG2 = 100;
-        var moisture = 50;
-
-
-
-        $(function(){
-
-            var g1 = new JustGage({
-                id: "g1",
-                value: temp,
-                min: min,
-                max: max,
-                title: "Temperature",
-                label: "Celsius",
-                levelColorsGradient: true,
-                levelColors: ["FF0000","FF6103","FFFF00","00FF00","FFFF00","FF0000"],
-                shadowSize: 2,
-                shadowVerticalOffset: 12
-            });
-
-
-            var g2 = new JustGage({
-                id: "g2",
-                value: moisture,
-                min: minG2,
-                max: maxG2,
-                title: "Soil Moisture",
-                label: "%",
-                levelColorsGradient: true,
-                levelColors: ["FF0000","FF6103","FFFF00","00FF00","FFFF00","FF0000"],
-                shadowSize: 2,
-                shadowVerticalOffset: 12
-            });
 
             setInterval(function() {
                 if(!$('#on_check').attr('checked'))return;
@@ -116,7 +74,7 @@
         <div class="col-sm-6">
             <!-- Slider button  for heater-->
             <div class="slidecontainer">
-                <h4> LIGHT <span id="light_state"></span></h4>
+                <h4> LIGHT <span id="light_state"> </span></h4>
                 <label class="switch">
                     <input type="checkbox" onchange="light_state_change(this)">
                     <span class="slider1 round"></span>
@@ -188,6 +146,7 @@
 
 
 <script>
+    $("#light_state_alarm").html("<img class=\"logo\" src=\"images/lightOff.png\" alt=\"attention\" width=\"50%\"> ");
 
     // Functions (jquery) to check switch **Light**
     var light_state_change = (element) => {
