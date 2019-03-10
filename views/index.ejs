@@ -22,23 +22,10 @@
         $( "#w_id" ).load(window.location.href + " #w_id" );
         $( "#sm_id" ).load(window.location.href + " #sm_id" );
         $( "#m_id" ).load(window.location.href + " #m_id" );
-        }, 10000);
+        }, 1000);
 
 
-            setInterval(function() {
-                $.get('http://'+window.location.host+'/?chart',function(data){
-                    data.temperature = data.temperature/1000;
-                    data.temperature = parseFloat(data.toFixed(3));
 
-                    data.moisture = data.temperature/1000;
-                    data.moisture = parseFloat(data.toFixed(3));
-
-                    g1.refresh(data.temperature);//GAGE1
-                    g2.refresh(data.moisture);//GAGE2
-
-                });
-            }, 5000);
-        });
 
     </script>
     <style>
@@ -202,35 +189,39 @@
         }
     }
 
-    var chart1 = (temperature) => {
-        return new JustGage({
-            id: "g1",
-            value: temperature,
-            min: 0,
-            max: 50 ,
-            title: "Temperature",
-            label: "Celsius",
-            levelColorsGradient: true,
-            levelColors: ["FF0000", "FF6103", "FFFF00", "00FF00", "FFFF00", "FF0000"],
-            shadowSize: 2,
-            shadowVerticalOffset: 12
-        });
-    }
-    var chart2 = (moisture) => {
-        return new JustGage({
-            id: "g2",
-            value: moisture,
-            min: 0,
-            max: 100,
-            title: "Soil Moisture",
-            label: "%",
-            levelColorsGradient: true,
-            levelColors: ["FF0000", "FF6103", "FFFF00", "00FF00", "FFFF00", "FF0000"],
-            shadowSize: 2,
-            shadowVerticalOffset: 12
-        });
-    }
-}
 
+    var chart1 = new JustGage({
+        id: "g1",
+        value: 0,
+        min: 0,
+        max: 50 ,
+        title: "Temperature",
+        label: "Celsius",
+        levelColorsGradient: true,
+        levelColors: ["FF0000", "FF6103", "FFFF00", "00FF00", "FFFF00", "FF0000"],
+        shadowSize: 2,
+        shadowVerticalOffset: 12
+    });
+    var chart2  = new JustGage({
+        id: "g2",
+        value: 0,
+        min: 0,
+        max: 100,
+        title: "Soil Moisture",
+        label: "%",
+        levelColorsGradient: true,
+        levelColors: ["FF0000", "FF6103", "FFFF00", "00FF00", "FFFF00", "FF0000"],
+        shadowSize: 2,
+        shadowVerticalOffset: 12
+    });
+
+    setInterval(function() {
+        $.get('http://'+window.location.host+'/charts',function(data){
+            console.log(data);
+            chart1.refresh(data.temperature);//GAGE1
+            chart2.refresh(data.moisture);//GAGE2
+
+        });
+    }, 500);
 </script>
 </html>
