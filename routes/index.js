@@ -11,7 +11,7 @@ var client = mqtt.connect("ws://192.168.0.200:1884/ws", {
     clientId: clientId
 })
 
-var content = { 
+var content = {
     doorMsg: "Door Closed" ,
     windowMsg: "Window Closed",
     tempMsg: 0,
@@ -38,7 +38,6 @@ client.on('connect', function () {
         if(topic === topicMotion) {
             motion(message);
         }
-
     });
 
     client.subscribe(topicTemp, function (err) {
@@ -68,10 +67,11 @@ client.on('connect', function () {
     });
 });
 
+
 var temp = (message) => {
     console.log(message.toString());
     content.tempMsg = message.toString();
-    char1 = chart1(content.tempMsg);
+
 }
 var door = (message) => {
     if (message == "Door Open") {
@@ -91,27 +91,29 @@ var window = (message) => {
         content.windowMsg = message;
     }
 }
+
 var moisture = (message) => {
     console.log(message.toString());
     content.moistureMsg = message.toString();
-    char2 = chart2(content.moistureMsg);
 }
 var motion = (message) => {
     console.log(message.toString());
     content.motionMsg = message.toString();
 }
+
 /* GET home page. */
 router.get('/', function(req, res) {
-    console.log(req.query);
-    if(req.query("chart")) {
-        console.log("called chart");
+    res.render('index', {  content : content } );
+});
+
+router.get('/charts', function(req, res) {
         res.send({
             temperature: content.tempMsg,
             moisture: content.moistureMsg
         });
-    }
-    res.render('index', {  content : content } );
 });
+
+
 
 // turn led on
 router.post('/turnOnLed', function (req, res) {
@@ -167,5 +169,6 @@ var turnOffHeater = () => {
         client.publish('heater', 'turn heater off');
     }
 }
+
 
 module.exports = router;
