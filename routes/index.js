@@ -18,7 +18,6 @@ var content = {
     moistureMsg: 0,
     motionMsg: "Nothing"};
 
-
 //Connection and subscribe to topics
 client.on('connect', function () {
 
@@ -143,14 +142,14 @@ router.post('/turnOffHeater', function (req, res) {
 var turnOnLED = () => {
     console.log("turnOnLED");
     if (client.connected) {
-        client.publish('WebToEsp/led', 'turn led on');
+        client.publish('light', 'turn light on');
     }
 }
 
 var turnOffLED = () => {
     console.log("turnOffLED");
     if (client.connected) {
-        client.publish('WebToEsp/led', 'turn led off');
+        client.publish('light', 'turn light off');
     }
 }
 
