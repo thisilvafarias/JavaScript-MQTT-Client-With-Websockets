@@ -4,12 +4,15 @@
     <title>Smart Home</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
     <script src="javascript/raphael.2.1.0.min.js"></script>
     <script src="javascript/justgage.1.0.1.min.js"></script>
+    <script src="javascript/jquery-3.3.1.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <script href="public/stylesheets/css/bootstrap-reboot.min.css"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/css/bootstrap.min.css">
 
 
     <title>IoT Web Client</title>
@@ -24,10 +27,9 @@
         $( "#m_id" ).load(window.location.href + " #m_id" );
         }, 1000);
 
-
-
-
     </script>
+
+
     <style>
 
         #g1 {
@@ -108,6 +110,9 @@
             <span id="motion_alarm"></span>
             <img class="logo" src="images/moveSensor.png" alt="attention" width="25%"> <br>
             <h4 id="m_id"> <%= content.motionMsg %> </h4>
+
+
+
         </div>
         <div class="col-sm-4">
             <img class="logo" src="images/door.png" alt="attention" width="25%"> <br>
